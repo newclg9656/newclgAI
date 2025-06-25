@@ -29,12 +29,15 @@
 
     <section class="overview">
       <form id="materialForm" class="material-form">
-        <label for="yearSelect">Select Year:</label>
-        <select id="yearSelect" required>
-          <option value="">-- Select Year --</option>
-          <option value="1">First Year</option>
-          <option value="2">Second Year</option>
-          <option value="3">Third Year</option>
+        <label for="semesterSelect">Select Semester:</label>
+        <select id="semesterSelect" required>
+          <option value="">-- Select Semester --</option>
+          <option value="1">Semester 1</option>
+          <option value="2">Semester 2</option>
+          <option value="3">Semester 3</option>
+          <option value="4">Semester 4</option>
+          <option value="5">Semester 5</option>
+          <option value="6">Semester 6</option>
         </select>
 
         <label for="subjectSelect">Select Subject:</label>
@@ -62,8 +65,8 @@
   </nav>
   <script src="script.js"></script>
   <script>
-    // Year to subjects mapping
-    const subjectsByYear = {
+    // Semester to subjects mapping
+    const subjectsBySemester = {
       "1": [
         { value: "maths", text: "Mathematics for AI" },
         { value: "intro", text: "Introduction to AI" },
@@ -78,6 +81,18 @@
         { value: "nlp", text: "Natural Language Processing" },
         { value: "cv", text: "Computer Vision" },
         { value: "aiethics", text: "AI Ethics" }
+      ],
+      "4": [
+        { value: "aiapp", text: "AI Applications" },
+        { value: "robotics", text: "Robotics" }
+      ],
+      "5": [
+        { value: "bigdata", text: "Big Data Analytics" },
+        { value: "cloudai", text: "Cloud Computing for AI" }
+      ],
+      "6": [
+        { value: "project", text: "Major Project" },
+        { value: "internship", text: "Internship/Industrial Training" }
       ]
     };
 
@@ -116,17 +131,41 @@
         "aiethics": [
           { name: "AI Ethics Paper", desc: "Research paper on AI Ethics", url: "docs/3_aiethics_paper.pdf" }
         ]
+      },
+      "4": {
+        "aiapp": [
+          { name: "AI Applications Notes", desc: "Notes on AI Applications", url: "docs/4_aiapp_notes.pdf" }
+        ],
+        "robotics": [
+          { name: "Robotics Guide", desc: "Introduction to Robotics", url: "docs/4_robotics_guide.pdf" }
+        ]
+      },
+      "5": {
+        "bigdata": [
+          { name: "Big Data Analytics", desc: "Big Data course material", url: "docs/5_bigdata.pdf" }
+        ],
+        "cloudai": [
+          { name: "Cloud for AI", desc: "Cloud Computing for AI notes", url: "docs/5_cloudai.pdf" }
+        ]
+      },
+      "6": {
+        "project": [
+          { name: "Project Guidelines", desc: "Major Project guidelines and format", url: "docs/6_project_guidelines.pdf" }
+        ],
+        "internship": [
+          { name: "Internship Report Format", desc: "Format for Internship/Industrial Training report", url: "docs/6_internship_format.pdf" }
+        ]
       }
     };
 
-    // Populate subjects based on year
-    const yearSelect = document.getElementById('yearSelect');
+    // Populate subjects based on semester
+    const semesterSelect = document.getElementById('semesterSelect');
     const subjectSelect = document.getElementById('subjectSelect');
-    yearSelect.addEventListener('change', function() {
+    semesterSelect.addEventListener('change', function() {
       subjectSelect.innerHTML = '<option value="">-- Select Subject --</option>';
       subjectSelect.disabled = !this.value;
-      if (this.value && subjectsByYear[this.value]) {
-        subjectsByYear[this.value].forEach(subj => {
+      if (this.value && subjectsBySemester[this.value]) {
+        subjectsBySemester[this.value].forEach(subj => {
           const opt = document.createElement('option');
           opt.value = subj.value;
           opt.textContent = subj.text;
@@ -138,12 +177,12 @@
     // Show documents on form submit
     document.getElementById('materialForm').addEventListener('submit', function(e) {
       e.preventDefault();
-      const year = yearSelect.value;
+      const semester = semesterSelect.value;
       const subject = subjectSelect.value;
       const container = document.getElementById('documentsContainer');
       container.innerHTML = '';
-      if (year && subject && documents[year] && documents[year][subject]) {
-        documents[year][subject].forEach(doc => {
+      if (semester && subject && documents[semester] && documents[semester][subject]) {
+        documents[semester][subject].forEach(doc => {
           const docDiv = document.createElement('div');
           docDiv.className = 'document-card';
           docDiv.innerHTML = `
@@ -154,7 +193,7 @@
           container.appendChild(docDiv);
         });
       } else {
-        container.innerHTML = '<p>No documents found for the selected year and subject.</p>';
+        container.innerHTML = '<p>No documents found for the selected semester and subject.</p>';
       }
     });
   </script>
