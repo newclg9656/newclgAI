@@ -249,6 +249,7 @@ body {
   top: 1rem;
   right: 1.5rem;
   z-index: 1001;
+  padding-top: 5px;
 }
 
 .hamburger span {
