@@ -119,7 +119,8 @@ body {
   display: flex;
   flex-direction: column;
   gap: 1.2rem;
-  align-items: flex-start;
+  align-items: center;      /* Center content horizontally */
+  text-align: center;       /* Center text inside the panel */
 }
 
 .contact-row {
@@ -127,6 +128,13 @@ body {
   align-items: flex-start;
   gap: 1rem;
   font-size: 1.08rem;
+  justify-content: center;  /* Center rows horizontally */
+  width: 100%;
+}
+
+.contact-row > div {
+  width: 100%;
+  text-align: center;       /* Center text in each row */
 }
 
 .contact-icon {
