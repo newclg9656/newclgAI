@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Resources - Department of AI</title>
+  <link rel="stylesheet" href="resources-style.css" />
+</head>
+<body>
+  <header class="navbar">
+    <div class="logo">
+      <img src="logo.jpg" alt="College Logo" class="logo-img" />
+      Dept. of AI - New College
+    </div>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="studymaterials.html">Study Materials</a></li>
+      <li><a href="staff.html">Staff</a></li>
+      <li><a href="resources.html">Resources</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+  </header>
+
+  <main class="home">
+    <section class="hero">
+      <h1>Useful Resources</h1>
+      <p>Explore tools, platforms, and references to support your AI learning.</p>
+    </section>
+
+    <section class="overview">
+      <form id="resourceForm" class="material-form">
+        <label for="resourceType">Select Resource Type:</label>
+        <select id="resourceType" required>
+          <option value="">-- Select Type --</option>
+          <option value="tools">AI Tools</option>
+          <option value="repos">Project Repositories</option>
+        </select>
+        <button type="submit" class="btn">Show Resources</button>
+      </form>
+      <div id="resourceContainer" class="documents-container"></div>
+    </section>
+  </main>
+
+  <div class="hamburger" onclick="toggleMenu()">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+  <nav class="mobile-menu" id="mobileMenu">
+    <a href="index.html">Home</a>
+    <a href="studymaterials.html">Study Materials</a>
+    <a href="staff.html">Staff</a>
+    <a href="resources.html">Resources</a>
+    <a href="contact.html">Contact</a>
+  </nav>
+  <script src="script.js"></script>
+  <script>
+    // Resource data
+    const resources = {
+      tools: [
+        {
+          name: "TensorFlow Playground",
+          desc: "Interactive visualization of neural networks.",
+          url: "https://playground.tensorflow.org/",
+          btn: "Visit"
+        },
+        {
+          name: "HuggingFace Spaces",
+          desc: "Explore and demo ML models in your browser.",
+          url: "https://huggingface.co/spaces",
+          btn: "Visit"
+        },
+        {
+          name: "Google Colab",
+          desc: "Free Jupyter notebook environment in the cloud.",
+          url: "https://colab.research.google.com/",
+          btn: "Open"
+        }
+      ],
+      repos: [
+        {
+          name: "AI Student Projects",
+          desc: "GitHub repository for student AI projects.",
+          url: "https://github.com/newcollege-ai/student-projects",
+          btn: "GitHub"
+        },
+        {
+          name: "Faculty Research",
+          desc: "Open-source research projects by faculty.",
+          url: "https://github.com/newcollege-ai/faculty-research",
+          btn: "GitHub"
+        }
+      ]
+    };
+
+    document.getElementById('resourceForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      const type = document.getElementById('resourceType').value;
+      const container = document.getElementById('resourceContainer');
+      container.innerHTML = '';
+      if (type && resources[type]) {
+        resources[type].forEach(res => {
+          const div = document.createElement('div');
+          div.className = 'document-card';
+          div.innerHTML = `
+            <h4>${res.name}</h4>
+            <p>${res.desc}</p>
+            <a href="${res.url}" class="btn" target="_blank" rel="noopener">${res.btn}</a>
+          `;
+          container.appendChild(div);
+        });
+      } else {
+        container.innerHTML = '<p>No resources found for the selected type.</p>';
+      }
+    });
+  </script>
+</body>
+</html>

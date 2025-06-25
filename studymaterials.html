@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Study Materials - Department of AI</title>
+  <link rel="stylesheet" href="studymaterials-style.css" />
+</head>
+<body>
+  <header class="navbar">
+    <div class="logo">
+      <img src="logo.jpg" alt="College Logo" class="logo-img" />
+      Dept. of AI - New College
+    </div>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="studymaterials.html">Study Materials</a></li>
+      <li><a href="staff.html">Staff</a></li>
+      <li><a href="resources.html">Resources</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+  </header>
+
+  <main class="home">
+    <section class="hero">
+      <h1>Study Materials</h1>
+      <p>Access AI course content, lecture notes, and exam preparation material.</p>
+    </section>
+
+    <section class="overview">
+      <form id="materialForm" class="material-form">
+        <label for="yearSelect">Select Year:</label>
+        <select id="yearSelect" required>
+          <option value="">-- Select Year --</option>
+          <option value="1">First Year</option>
+          <option value="2">Second Year</option>
+          <option value="3">Third Year</option>
+        </select>
+
+        <label for="subjectSelect">Select Subject:</label>
+        <select id="subjectSelect" required disabled>
+          <option value="">-- Select Subject --</option>
+        </select>
+
+        <button type="submit" class="btn">Show Materials</button>
+      </form>
+      <div id="documentsContainer" class="documents-container"></div>
+    </section>
+  </main>
+
+  <div class="hamburger" onclick="toggleMenu()">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+  <nav class="mobile-menu" id="mobileMenu">
+    <a href="index.html">Home</a>
+    <a href="studymaterials.html">Study Materials</a>
+    <a href="staff.html">Staff</a>
+    <a href="resources.html">Resources</a>
+    <a href="contact.html">Contact</a>
+  </nav>
+  <script src="script.js"></script>
+  <script>
+    // Year to subjects mapping
+    const subjectsByYear = {
+      "1": [
+        { value: "maths", text: "Mathematics for AI" },
+        { value: "intro", text: "Introduction to AI" },
+        { value: "python", text: "Python Programming" }
+      ],
+      "2": [
+        { value: "ml", text: "Machine Learning" },
+        { value: "ds", text: "Data Structures" },
+        { value: "dl", text: "Deep Learning" }
+      ],
+      "3": [
+        { value: "nlp", text: "Natural Language Processing" },
+        { value: "cv", text: "Computer Vision" },
+        { value: "aiethics", text: "AI Ethics" }
+      ]
+    };
+
+    // Documents data (example)
+    const documents = {
+      "1": {
+        "maths": [
+          { name: "Unit 1 Notes", desc: "Detailed notes for Unit 1", url: "docs/1_maths_unit1.pdf" },
+          { name: "Sample Questions", desc: "Practice questions for Mathematics", url: "docs/1_maths_questions.pdf" }
+        ],
+        "intro": [
+          { name: "Syllabus", desc: "Full syllabus for Introduction to AI", url: "docs/1_intro_syllabus.pdf" }
+        ],
+        "python": [
+          { name: "Python Basics", desc: "Lecture notes on Python basics", url: "docs/1_python_basics.pdf" }
+        ]
+      },
+      "2": {
+        "ml": [
+          { name: "ML Algorithms", desc: "Overview of ML algorithms", url: "docs/2_ml_algorithms.pdf" }
+        ],
+        "ds": [
+          { name: "Data Structures Notes", desc: "Comprehensive notes", url: "docs/2_ds_notes.pdf" }
+        ],
+        "dl": [
+          { name: "Deep Learning Guide", desc: "Beginner's guide to DL", url: "docs/2_dl_guide.pdf" }
+        ]
+      },
+      "3": {
+        "nlp": [
+          { name: "NLP Notes", desc: "Lecture notes for NLP", url: "docs/3_nlp_notes.pdf" }
+        ],
+        "cv": [
+          { name: "Computer Vision Slides", desc: "Slides for CV lectures", url: "docs/3_cv_slides.pdf" }
+        ],
+        "aiethics": [
+          { name: "AI Ethics Paper", desc: "Research paper on AI Ethics", url: "docs/3_aiethics_paper.pdf" }
+        ]
+      }
+    };
+
+    // Populate subjects based on year
+    const yearSelect = document.getElementById('yearSelect');
+    const subjectSelect = document.getElementById('subjectSelect');
+    yearSelect.addEventListener('change', function() {
+      subjectSelect.innerHTML = '<option value="">-- Select Subject --</option>';
+      subjectSelect.disabled = !this.value;
+      if (this.value && subjectsByYear[this.value]) {
+        subjectsByYear[this.value].forEach(subj => {
+          const opt = document.createElement('option');
+          opt.value = subj.value;
+          opt.textContent = subj.text;
+          subjectSelect.appendChild(opt);
+        });
+      }
+    });
+
+    // Show documents on form submit
+    document.getElementById('materialForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      const year = yearSelect.value;
+      const subject = subjectSelect.value;
+      const container = document.getElementById('documentsContainer');
+      container.innerHTML = '';
+      if (year && subject && documents[year] && documents[year][subject]) {
+        documents[year][subject].forEach(doc => {
+          const docDiv = document.createElement('div');
+          docDiv.className = 'document-card';
+          docDiv.innerHTML = `
+            <h4>${doc.name}</h4>
+            <p>${doc.desc}</p>
+            <a href="${doc.url}" class="btn" download>Download</a>
+          `;
+          container.appendChild(docDiv);
+        });
+      } else {
+        container.innerHTML = '<p>No documents found for the selected year and subject.</p>';
+      }
+    });
+  </script>
+</body>
+</html>
