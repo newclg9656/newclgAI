@@ -11,7 +11,7 @@ body {
       display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 1rem 2rem;
+  padding: 1rem 0;
   background-color: #2c2f4a;
   position: sticky;
   top: 0;
